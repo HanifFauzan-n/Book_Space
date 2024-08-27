@@ -5,7 +5,8 @@ import './index.css'
 import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import Login from "./pages/Login.jsx";
+import Login from "./auth/Login.jsx";
+import ForgotPassword from "./auth/ForgotPassword.jsx";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login/>
+      },
+      {
+        path: "/forgot",
+        element: <ForgotPassword/>
       }
     ]
   }
