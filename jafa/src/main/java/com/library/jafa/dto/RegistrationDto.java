@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class RegistrationDto {
 
     private String name;
-    private Integer age; // yyyy - MM - dd ISO_8601
+    private Integer age;
     private String gender;
     private String Address;
     private String photo;

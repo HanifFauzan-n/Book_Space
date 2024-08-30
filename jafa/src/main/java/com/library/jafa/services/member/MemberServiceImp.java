@@ -84,7 +84,7 @@ public class MemberServiceImp implements MemberService {
         if (dto.getGender() == null || dto.getGender().isEmpty()) {
             throw new IllegalArgumentException("Gender cannot be empty.");
         }
-        if (!dto.getGender().equals("Female") && !dto.getGender().equals("Male")) {
+        if (!dto.getGender().equalsIgnoreCase("Female") && !dto.getGender().equalsIgnoreCase("Male")) {
             throw new IllegalArgumentException("Gender must be 'Female' or 'Male'.");
         }
     

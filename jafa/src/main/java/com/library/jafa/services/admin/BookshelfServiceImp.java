@@ -62,6 +62,7 @@ public class BookshelfServiceImp implements BookshelfService {
         return bookshelfRepository.save(bookshelf);
     }
 
+    @Override
     public String removeBookshelf(String id) {
         // Memeriksa apakah bookshelf tidak bernilai null sebelum mengaksesnya
         Bookshelf bookshelf = bookshelfRepository.findById(id).orElse(null);
@@ -78,6 +79,7 @@ public class BookshelfServiceImp implements BookshelfService {
     }
     
 
+    @Override
     public Bookshelf updateBookshelf(String id, BookshelfRequestDto dto) {
         validasi(dto);
         Bookshelf bookshelf = bookshelfRepository.findByCategoryBook(dto.getCategoryBook());
