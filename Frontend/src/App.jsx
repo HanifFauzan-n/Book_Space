@@ -1,12 +1,17 @@
-import { Outlet } from "react-router-dom"
+import { Outlet } from "react-router-dom";
+import AuthProvider from "./auth/AuthProvider";
+import { ContentProvider } from "./components/ContentProvider";
 
 function App() {
-
   return (
     <>
-   <Outlet/>
+      <AuthProvider>
+        <ContentProvider>
+          <Outlet />
+        </ContentProvider>
+      </AuthProvider>
     </>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -31,6 +31,7 @@ const Login = () => {
 		if (success) {
 			const token = success.token
 			auth.handleLogin(token)
+      console.log(auth.handleLogin(token))
 			navigate(redirectUrl, { replace: true })
 			window.location.reload()
 		} else {
@@ -98,7 +99,7 @@ const Login = () => {
           </button>
         </form>
         <p className="mt-6 text-center text-gray-700">
-          Dont have an account? <a href="#signup" className="text-blue-500 hover:underline">Sign up</a>
+          Dont have an account? <Link to="/regis" className="text-blue-500 hover:underline">Sign up</Link>
         </p>
       </div>
     </div>

@@ -41,17 +41,15 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const success = await resetPassword(token[""], newPassword[""]);
+    const reset = await resetPassword(token[""], newPassword[""]);
     console.log(token[""]);
     console.log(newPassword[""]);
-    console.log(success);
-    if (success && newPassword.length >= 8) {
+    console.log(reset);
+    if (reset) {
       
       navigate(redirectUrl, { replace: true });
       window.location.reload();
-    } else if (newPassword.length < 8) {
-      setErrorMessage("your new password is less than 8 characters");
-    } else {
+    }  else {
       setErrorMessage("The token you entered has expired");
     }
     setTimeout(() => {
