@@ -1,0 +1,38 @@
+create database library;
+
+INSERT INTO Bookshelf (id, category_book, capacity, fill_bookshelf, description_bookshelf) VALUES
+('1', 'Fiction', 50, 30, 'Bookshelf for fiction novels'),
+('2', 'Classics', 40, 20, 'Bookshelf for classic literature'),
+('3', 'Science Fiction', 35, 15, 'Bookshelf for science fiction novels'),
+('4', 'Fantasy', 45, 25, 'Bookshelf for fantasy novels and series'),
+('5', 'Non-Fiction', 60, 40, 'Bookshelf for non-fiction books'),
+('6', 'History', 30, 10, 'Bookshelf for history books and documents'),
+('7', 'Philosophy', 25, 18, 'Bookshelf for philosophical works'),
+('8', 'Biographies', 20, 12, 'Bookshelf for biographies and memoirs'),
+('9', 'Mystery', 35, 20, 'Bookshelf for mystery and thriller novels'),
+('10', 'Poetry', 15, 8, 'Bookshelf for poetry collections');
+
+
+INSERT INTO Book (id, book_title, author, recording_date, photo_book, stock_book, status_book, description, bookshelf_id) VALUES
+('1', 'The Great Gatsby', 'F. Scott Fitzgerald', '2024-01-01', NULL, 5, 'Available', 'A classic novel', '1'),
+('2', 'To Kill a Mockingbird', 'Harper Lee', '2024-01-02', NULL, 10, 'Available', 'A novel racial injustice', '2'),
+('3', '1984', 'George Orwell', '2024-01-03', NULL, 7, 'Available', 'A dystopian novel', '3'),
+('4', 'Moby-Dick', 'Herman Melville', '2024-01-04', NULL, 3, 'Available', 'A novel  sea captain', '1'),
+('5', 'War and Peace', 'Leo Tolstoy', '2024-01-05', NULL, 2, 'Available', 'A novel the Napoleonic Wars', '2'),
+('6', 'Pride and Prejudice', 'Jane Austen', '2024-01-06', NULL, 8, 'Available', 'A romantic novel', '3'),
+('7', 'The Catcher in the Rye', 'J.D. Salinger', '2024-01-07', NULL, 4, 'Available', 'A novel about teenage angst', '1'),
+('8', 'The Lord of the Rings', 'J.R.R. Tolkien', '2024-01-08', NULL, 6, 'Available', 'A fantasy epic', '2'),
+('9', 'The Odyssey', 'Homer', '2024-01-09', NULL, 9, 'Available', 'An ancient Greek epic poem', '3'),
+('10', 'Don Quixote', 'Miguel de Cervantes', '2024-01-10', NULL, 11, 'Available', 'A novel about a man who reads too much', '1');
+
+INSERT INTO Book (id, book_title, author, recording_date, photo_book, stock_book, status_book, description, bookshelf_id) VALUES
+('11', 'Crime and Punishment', 'Fyodor Dostoevsky', '2024-01-11', NULL, 12, 'Available', 'A novel about guilt and redemption', '1'),
+('12', 'The Brothers Karamazov', 'Fyodor Dostoevsky', '2024-01-12', NULL, 10, 'Available', 'A philosophical novel about faith and doubt', '2'),
+('13', 'The Divine Comedy', 'Dante Alighieri', '2024-01-13', NULL, 7, 'Available', 'An epic poem about the afterlife', '3'),
+('14', 'Brave New World', 'Aldous Huxley', '2024-01-14', NULL, 5, 'Available', 'A dystopian novel', '1'),
+('15', 'Anna Karenina', 'Leo Tolstoy', '2024-01-15', NULL, 9, 'Available', 'A tragic love story', '2'),
+('16', 'Ulysses', 'James Joyce', '2024-01-16', NULL, 3, 'Available', 'A modernist novel', '3'),
+('17', 'Madame Bovary', 'Gustave Flaubert', '2024-01-17', NULL, 6, 'Available', 'A novel about a woman s search for fulfillment', '1'),
+('18', 'One Hundred Years of Solitude', 'Gabriel Garcia Marquez', '2024-01-18', NULL, 8, 'Available', 'A magical realism novel', '2'),
+('19', 'The Iliad', 'Homer', '2024-01-19', NULL, 4, 'Available', 'An ancient Greek epic poem', '3'),
+('20', 'Les Misérables', 'Victor Hugo', '2024-01-20', NULL, 11, 'Available', 'A novel about justice and morality', '1');
