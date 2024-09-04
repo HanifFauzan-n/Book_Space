@@ -17,7 +17,7 @@
 ## Teknologi yang Digunakan
 
 - **Backend**: Java dengan Spring Framework
-- **Database**: MySQL
+- **Database**: PostgresSQL
 - **Frontend**: React.js dengan Tailwind CSS untuk antarmuka pengguna yang responsif dan modern
 - **ORM**: Hibernate untuk manajemen database
 
