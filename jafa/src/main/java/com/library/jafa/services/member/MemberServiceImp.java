@@ -124,6 +124,7 @@ public class MemberServiceImp implements MemberService {
         Member member = new Member();
         member.setMemberName(dto.getName());
         member.setEmail(dto.getEmail());
+        member.setAddress(dto.getAddress());
         member.setGender(dto.getGender());
         member.setMemberAge(dto.getAge());
         member.setUser(users);
@@ -131,6 +132,7 @@ public class MemberServiceImp implements MemberService {
 
     }
 
+    @Override
     public String removeMember(String id) {
         Member member = memberRepository.findById(id).orElse(null);
         if (member != null) {
@@ -144,6 +146,7 @@ public class MemberServiceImp implements MemberService {
         }
     }
 
+    @Override
     public IdentityResponseDto updateMember(String id, RegistrationDto dto) {
         validasi(dto);
         Member member = memberRepository.findById(id).orElse(null);
@@ -179,6 +182,7 @@ public class MemberServiceImp implements MemberService {
         return memberDao.findAll(memberName, addres, memberAge, page, size, sortBy, sortOrder);
     }
 
+    @Override
     public void uploadMemberPhoto(String id, MultipartFile photo)
             throws IOException, SQLException {
         String[] filename = Objects.requireNonNull(photo.getResource().getFilename()).split("\\.");
@@ -187,7 +191,6 @@ public class MemberServiceImp implements MemberService {
                 && !filename[filename.length - 1].equalsIgnoreCase("png")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported filetype");
         }
-        System.out.println(filename);
 
         Member member = memberRepository.findById(id).orElse(null);
         if (member != null) {

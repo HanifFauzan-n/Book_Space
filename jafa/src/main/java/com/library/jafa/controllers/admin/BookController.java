@@ -1,7 +1,9 @@
 package com.library.jafa.controllers.admin;
 
+import java.io.IOException;
+import java.sql.SQLException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -103,7 +105,7 @@ public class BookController {
             log.info(e.getMessage());
             return ResponseEntity.status(e.getStatusCode()).body(GenericResponse.error(e.getReason()));
         }
-         catch (Exception e) {
+         catch (IOException | SQLException e) {
             log.info(e.getMessage());
             return ResponseEntity.internalServerError().body(GenericResponse.error(MessageConstant.ERROR_500));
         }

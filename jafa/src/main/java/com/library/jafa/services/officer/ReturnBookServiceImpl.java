@@ -1,16 +1,20 @@
 package com.library.jafa.services.officer;
 
+import java.time.LocalDate;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.library.jafa.dto.officer.ReturnBookReqDto;
 import com.library.jafa.dto.officer.ReturnBookResponseDto;
+import com.library.jafa.entities.Book;
 import com.library.jafa.entities.BorrowingBook;
 import com.library.jafa.entities.ReturnBook;
+import com.library.jafa.repositories.BookRepository;
 import com.library.jafa.repositories.BorrowingBookRepository;
 import com.library.jafa.repositories.ReturnBookRepository;
-import java.time.LocalDate;
-import java.util.UUID;
 
 @Service
 public class ReturnBookServiceImpl implements ReturnBookService {
@@ -20,6 +24,9 @@ public class ReturnBookServiceImpl implements ReturnBookService {
 
     @Autowired
     BorrowingBookRepository borrowingBookRepository;
+
+    @Autowired
+    BookRepository bookRepository;
 
     @Override
     @Transactional
@@ -40,6 +47,10 @@ public class ReturnBookServiceImpl implements ReturnBookService {
         // Update the borrowing status of the book to "Returned"
         borrowingBook.setDescription("Returned");
         borrowingBook.setReturnDate(LocalDate.now());
+        Book book = borrowingBook.getBook();
+        book.setStockBook(book.getStockBook() + 1);
+        book.setStatusBook("AVAIBLE");
+        bookRepository.save(book);
         borrowingBookRepository.save(borrowingBook);
         
         // Save return book data

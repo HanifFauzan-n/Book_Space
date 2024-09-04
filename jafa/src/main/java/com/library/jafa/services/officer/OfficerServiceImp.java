@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.library.jafa.constans.RoleConstant;
+import com.library.jafa.dao.officer.OfficerDao;
 import com.library.jafa.dto.IdentityResponseDto;
+import com.library.jafa.dto.PageResponse;
 import com.library.jafa.dto.RegistrationDto;
 import com.library.jafa.entities.LibraryOfficer;
 import com.library.jafa.entities.Roles;
@@ -37,6 +39,9 @@ public class OfficerServiceImp implements OfficerService {
 
     @Autowired
     OfficerRepository officerRepository;
+
+    @Autowired
+    OfficerDao officerDao;
 
     @Autowired
     EmailService emailService;
@@ -138,6 +143,7 @@ public class OfficerServiceImp implements OfficerService {
         emailService.sendSimpleMessage(to, subject, text);
     }
 
+    @Override
     public String removeOfficer(String id) {
         LibraryOfficer officer = officerRepository.findById(id).orElse(null);
         if (officer != null) {
@@ -150,6 +156,7 @@ public class OfficerServiceImp implements OfficerService {
         }
     }
 
+    @Override
     public IdentityResponseDto updateOfficer(String id, RegistrationDto dto){
         validasi(dto);
         LibraryOfficer officer = officerRepository.findById(id).orElse(null);
@@ -168,8 +175,15 @@ public class OfficerServiceImp implements OfficerService {
         return identity;
     }
 
+        @Override
+    public PageResponse<LibraryOfficer> findAll(String officerName, String officerAddres, Integer officerAge, int page, int size,
+            String sortBy, String sortOrder) {
+        return officerDao.findAll(officerName, officerAddres, officerAge, page, size, sortBy, sortOrder);
+    }
 
 
+
+    @Override
     public void uploadOfficerPhoto(String id, MultipartFile photo)
     throws IOException, SQLException {
         String[] filename = Objects.requireNonNull(photo.getResource().getFilename()).split("\\.");
@@ -178,7 +192,7 @@ public class OfficerServiceImp implements OfficerService {
                 && !filename[filename.length - 1].equalsIgnoreCase("png")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported filetype");
         }
-        System.out.println(filename);
+        // System.out.println(filename);
 
         LibraryOfficer officer2 = officerRepository.findById(id).orElse(null);
         if (officer2 != null) {

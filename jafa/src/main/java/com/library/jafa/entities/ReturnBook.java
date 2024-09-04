@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,11 +25,11 @@ public class ReturnBook {
     @Column(name = "return_date")
     private LocalDate returnDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false)
     private Book book;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "member_id", referencedColumnName = "id", nullable = false)
     private Member member;
 }

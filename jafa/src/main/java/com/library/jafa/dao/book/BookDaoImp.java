@@ -5,13 +5,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-// import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.library.jafa.dto.PageResponse;
 import com.library.jafa.entities.Book;
-import com.library.jafa.repositories.BookshelfRepository;
+import com.library.jafa.entities.Bookshelf;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -21,17 +20,14 @@ import jakarta.persistence.criteria.Order;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-// import lombok.extern.slf4j.Slf4j;
+import lombok.extern.slf4j.Slf4j;
 
-// @Slf4j
+@Slf4j
 @Repository
 public class BookDaoImp implements BookDao {
 
     @Autowired
     EntityManager entityManager;
-
-    @Autowired
-    BookshelfRepository bookshelfRepository;
 
     @Override
     public PageResponse<Book> findAll(String author,String statusBook,String category,int page,int size, String sortBy, String sortOrder){
@@ -46,6 +42,10 @@ public class BookDaoImp implements BookDao {
                 sortBy = "bookshelf";
             }
             Path<Object> orderByPath = bookRoot.get(sortBy);
+            if(sortBy.equals("bookshelf")){
+                Path<Bookshelf> bookshelfPath = bookRoot.get("bookshelf");
+                orderByPath = bookshelfPath.get("categoryBook");
+            }
             Order order= null;
             if (sortOrder != null && sortOrder.equalsIgnoreCase("desc")) {
                 order = criteriaBuilder.desc(orderByPath);
@@ -79,9 +79,9 @@ public class BookDaoImp implements BookDao {
 
         if (category != null && !category.isBlank() && !category.isEmpty()) {
             Join<Object, Object> bookshelfJoin = root.join("bookshelf");
-            predicates.add(criteriaBuilder.equal(bookshelfJoin.get("categoryBook"), category));
+            predicates.add(criteriaBuilder.equal(bookshelfJoin.get("categoryBook"), category ));
         }
         
-        return predicates.toArray(new Predicate[0]);
+        return predicates.toArray(Predicate[]::new);
     }
 }

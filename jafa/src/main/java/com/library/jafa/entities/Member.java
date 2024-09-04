@@ -37,6 +37,7 @@ public class Member {
     @Column(name = "address")
     private String address;
 
+    
     @Column(name = "photo_member")
     private Blob photoMember;
 

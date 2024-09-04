@@ -21,13 +21,13 @@ import com.library.jafa.entities.Book;
 import com.library.jafa.entities.Bookshelf;
 import com.library.jafa.repositories.BookRepository;
 import com.library.jafa.repositories.BookshelfRepository;
-import com.library.jafa.repositories.RoleRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class BookServiceImp implements BookService {
 
-    @Autowired
-    RoleRepository rolesRepository;
 
     @Autowired
     BookshelfRepository bookshelfRepository;
@@ -38,7 +38,7 @@ public class BookServiceImp implements BookService {
     @Autowired
     BookDao bookDao;
 
-    private final String AVAILABLE = "TERSEDIA";
+    private final String AVAILABLE = "AVAILABLE";
 
     @Override
     @Transactional
@@ -102,10 +102,17 @@ public class BookServiceImp implements BookService {
         if (dto.getAuthor().length() < 2 || dto.getAuthor().length() > 40) {
             throw new IllegalArgumentException("Author name length must be between 2 and 40 characters.");
         }
+        
         // Check allowed characters (only letters, spaces, apostrophes, and hyphens)
         if (!dto.getAuthor().matches("^[a-zA-Z\\s'-]*$")) {
             throw new IllegalArgumentException(
                     "Author name can only consist of letters, spaces, apostrophes, and hyphens.");
+        }
+        if (dto.getFill() == null) {
+            throw new IllegalArgumentException("Stock cannot be empty");
+        }
+        if (dto.getCategoryBook() == null) {
+            throw new IllegalArgumentException("Category cannot be empty");
         }
         if (bookshelfRepository.findByCategoryBook(dto.getCategoryBook()) == null) {
             throw new IllegalArgumentException("Cannot find matching book category.");
@@ -132,6 +139,7 @@ public class BookServiceImp implements BookService {
 
     }
 
+    @Override
     public String removeBook(String id) {
         Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {
@@ -145,6 +153,7 @@ public class BookServiceImp implements BookService {
         }
     }
 
+    @Override
     public Book updateBook(String id, BookRequestDto dto) {
         validasi(dto);
         if (bookRepository.findByBookTitle(dto.getBookTitle()) != null) {
@@ -181,6 +190,7 @@ public class BookServiceImp implements BookService {
         return bookDao.findAll(author, statusBook, category, page, size, sortBy, sortOrder);
     }
 
+    @Override
     public void uploadBookPhoto(String id, MultipartFile photo)
             throws IOException, SQLException {
         String[] filename = Objects.requireNonNull(photo.getResource().getFilename()).split("\\.");
@@ -189,7 +199,6 @@ public class BookServiceImp implements BookService {
                 && !filename[filename.length - 1].equalsIgnoreCase("png")) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Unsupported filetype");
         }
-        System.out.println(filename);
 
         Book book = bookRepository.findById(id).orElse(null);
         if (book != null) {

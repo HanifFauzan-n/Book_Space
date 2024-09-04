@@ -47,7 +47,7 @@ public class JwtFilter extends OncePerRequestFilter {
                         username, "", Collections.singleton(new SimpleGrantedAuthority(claims.get("role").toString())));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        } catch (Exception e) {
+        } catch (ServletException | IOException e) {
             response.setStatus(HttpStatus.FORBIDDEN.value());
             response.setContentType(MediaType.APPLICATION_JSON_VALUE);
             response.getWriter().write("Your access is forbidden");

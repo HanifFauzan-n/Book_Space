@@ -1,4 +1,4 @@
-package com.library.jafa.controllers.officer;
+package com.library.jafa.controllers.admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.library.jafa.dto.GenericResponse;
-import com.library.jafa.services.member.MemberService;
+import com.library.jafa.services.officer.OfficerService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,19 +18,19 @@ import lombok.extern.slf4j.Slf4j;
 
 @CrossOrigin("http://localhost:5173")
 @RestController
-@RequestMapping("/member")
-@Tag(name = "officer-member")
+@RequestMapping("/officer")
+@Tag(name = "admin-officer")
 @Slf4j
-public class FindMemberController {
+public class FindOfficerController {
     @Autowired
-    MemberService memberService;
+    OfficerService officerService;
 
-    @GetMapping("find-all-member")
+    @GetMapping("find-all-officer")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Object> findAll(
-            @RequestParam(required = false) String memberName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Integer memberAge,
+            @RequestParam(required = false) String officerName,
+            @RequestParam(required = false) String officerAddress,
+            @RequestParam(required = false) Integer officerAge,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String sortBy,
@@ -40,7 +40,7 @@ public class FindMemberController {
         try {
             return ResponseEntity.ok()
                     .body(GenericResponse.success(
-                            memberService.findAll(memberName, address, memberAge, page, size, sortBy, sortOrder),
+                            officerService.findAll(officerName, officerAddress, officerAge, page, size, sortBy, sortOrder),
                             "Succesfully fetch data"));
         } catch (ResponseStatusException e) {
             log.info(e.getMessage());

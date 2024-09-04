@@ -2,10 +2,12 @@ package com.library.jafa.controllers.officer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.library.jafa.dto.GenericResponse;
 import com.library.jafa.dto.officer.ReturnBookReqDto;
 import com.library.jafa.dto.officer.ReturnBookResponseDto;
@@ -13,7 +15,7 @@ import com.library.jafa.services.officer.ReturnBookService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.extern.slf4j.Slf4j;
-
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/officer")
 @Slf4j

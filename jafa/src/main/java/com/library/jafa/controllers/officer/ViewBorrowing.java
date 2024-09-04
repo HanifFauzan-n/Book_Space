@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.library.jafa.dto.GenericResponse;
-import com.library.jafa.services.member.MemberService;
+import com.library.jafa.services.officer.RecordLoanService;
 
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -21,16 +21,15 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("/member")
 @Tag(name = "officer-member")
 @Slf4j
-public class FindMemberController {
+public class ViewBorrowing {
     @Autowired
-    MemberService memberService;
+    RecordLoanService recordService;
 
-    @GetMapping("find-all-member")
+    @GetMapping("view-all-borrowing")
     @SecurityRequirement(name = "Bearer Authentication")
     public ResponseEntity<Object> findAll(
-            @RequestParam(required = false) String memberName,
-            @RequestParam(required = false) String address,
-            @RequestParam(required = false) Integer memberAge,
+            @RequestParam(required = false) String member,
+            @RequestParam(required = false) String book,
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String sortBy,
@@ -40,7 +39,7 @@ public class FindMemberController {
         try {
             return ResponseEntity.ok()
                     .body(GenericResponse.success(
-                            memberService.findAll(memberName, address, memberAge, page, size, sortBy, sortOrder),
+                            recordService.findAll(member, book,  page, size, sortBy, sortOrder),
                             "Succesfully fetch data"));
         } catch (ResponseStatusException e) {
             log.info(e.getMessage());

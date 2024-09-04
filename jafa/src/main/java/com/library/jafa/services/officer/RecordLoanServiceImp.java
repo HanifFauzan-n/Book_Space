@@ -3,10 +3,11 @@ package com.library.jafa.services.officer;
 import java.time.LocalDate;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.library.jafa.dao.officer.BorrowingDao;
+import com.library.jafa.dto.PageResponse;
 import com.library.jafa.dto.officer.RecordLoanReqDto;
 import com.library.jafa.dto.officer.RecordLoanResponseDto;
 import com.library.jafa.entities.Book;
@@ -15,7 +16,6 @@ import com.library.jafa.entities.Member;
 import com.library.jafa.repositories.BookRepository;
 import com.library.jafa.repositories.BorrowingBookRepository;
 import com.library.jafa.repositories.MemberRepository;
-import com.library.jafa.services.auth.EmailService;
 
 @Service
 public class RecordLoanServiceImp implements RecordLoanService {
@@ -30,10 +30,7 @@ public class RecordLoanServiceImp implements RecordLoanService {
     MemberRepository memberRepository;
 
     @Autowired
-    EmailService emailService;
-
-    @Autowired
-    PasswordEncoder passwordEncoder;
+    BorrowingDao borrowingDao;
 
     @Override
     @Transactional
@@ -50,9 +47,21 @@ public class RecordLoanServiceImp implements RecordLoanService {
         if(memberRepository.findByMemberName(dto.getBorrowerName()) == null){
             throw new IllegalArgumentException("Borrower name not found.");
         }
+        if (borrowingRepository.findByDescriptionAndMember_MemberNameAndBook_BookTitle("Borrowed", dto.getBorrowerName(), dto.getBorrowedBook()) != null){
+            throw new IllegalArgumentException("Cannot borrow books that you have already borrowed.");
+
+        }
+        if(bookRepository.findByBookTitle(dto.getBorrowedBook()).getStockBook() <= 0) {
+            throw new IllegalArgumentException("The book stock is out.");
+
+        }
         
 
         Book book = bookRepository.findByBookTitle(dto.getBorrowedBook());
+        book.setStockBook(book.getStockBook() - 1);
+        if(book.getStockBook() == 0) {
+            book.setStatusBook("Being borrowed");
+        }
         Member member = memberRepository.findByMemberName(dto.getBorrowerName()).get();
         saveRecord(dto,book, member);
 
@@ -69,6 +78,12 @@ public class RecordLoanServiceImp implements RecordLoanService {
         borrowing.setMember(member);
         return borrowingRepository.save(borrowing);
     
+    }
+
+            @Override
+    public PageResponse<BorrowingBook> findAll(String member, String book, int page, int size,
+            String sortBy, String sortOrder) {
+        return borrowingDao.findAll(member, book, page, size, sortBy, sortOrder);
     }
 
 

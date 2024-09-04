@@ -1,4 +1,4 @@
-package com.library.jafa.dao.member;
+package com.library.jafa.dao.officer;
 
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.library.jafa.dto.PageResponse;
-import com.library.jafa.entities.Member;
+import com.library.jafa.entities.LibraryOfficer;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -22,21 +22,22 @@ import jakarta.persistence.criteria.Root;
 
 
 @Repository
-public class MemberDaoImpl implements MemberDao{
+public class OfficerDaoImpl implements OfficerDao{
+
 
     @Autowired
     EntityManager entityManager;
 
     @Override
-    public PageResponse<Member> findAll(String memberName, String address, Integer memberAge, int page, int size, String sortBy, String sortOrder) {
+    public PageResponse<LibraryOfficer> findAll(String officerName, String officerAddress, Integer officerAge, int page, int size, String sortBy, String sortOrder) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
     
-        CriteriaQuery<Member> criteriaQuery = criteriaBuilder.createQuery(Member.class);
-        Root<Member> memberRoot = criteriaQuery.from(Member.class);
+        CriteriaQuery<LibraryOfficer> criteriaQuery = criteriaBuilder.createQuery(LibraryOfficer.class);
+        Root<LibraryOfficer> officerRoot = criteriaQuery.from(LibraryOfficer.class);
     
     
         if (sortBy != null && !sortBy.isEmpty()) {
-            Path<Object> orderByPath = memberRoot.get(sortBy);
+            Path<Object> orderByPath = officerRoot.get(sortBy);
             Order order= null;
             if (sortOrder != null && sortOrder.equalsIgnoreCase("desc")) {
                 order = criteriaBuilder.desc(orderByPath);
@@ -47,7 +48,7 @@ public class MemberDaoImpl implements MemberDao{
             criteriaQuery.orderBy(order);
         }
         
-        List<Member> result = entityManager.createQuery(criteriaQuery)
+        List<LibraryOfficer> result = entityManager.createQuery(criteriaQuery)
         .setFirstResult((page - 1) * size)
         .setMaxResults(size)
         .getResultList();
@@ -55,28 +56,28 @@ public class MemberDaoImpl implements MemberDao{
         
         // paginasi
         CriteriaQuery<Long> countQuery = criteriaBuilder.createQuery(Long.class);
-        Root<Member> memberRootCount = countQuery.from(Member.class);
-        countQuery.select(criteriaBuilder.count(memberRootCount))
-        .where(createPredicate(criteriaBuilder, memberRootCount, memberName, address,memberAge));
+        Root<LibraryOfficer> officerRootCount = countQuery.from(LibraryOfficer.class);
+        countQuery.select(criteriaBuilder.count(officerRootCount))
+        .where(createPredicate(criteriaBuilder, officerRootCount, officerName, officerAddress,officerAge));
         Long totalItem = entityManager.createQuery(countQuery).getSingleResult();
     
         return PageResponse.success(result, page, size, totalItem);
     }
     
 
-    private Predicate[] createPredicate(CriteriaBuilder criteriaBuilder, Root<Member> root, String memberName, String address, Integer memberAge) {
+    private Predicate[] createPredicate(CriteriaBuilder criteriaBuilder, Root<LibraryOfficer> root, String officerName, String officerAddress, Integer officerAge) {
         List<Predicate> predicates = new ArrayList<>();
-        if (memberName != null && !memberName.isBlank() && !memberName.isEmpty()) {
-            predicates.add(criteriaBuilder.like(root.get("memberName"), "%" + memberName + "%"));
+        if (officerName != null && !officerName.isBlank() && !officerName.isEmpty()) {
+            predicates.add(criteriaBuilder.like(root.get("officerName"), "%" + officerName + "%"));
         }
     
-        if (address != null && !address.isBlank() && !address.isEmpty()) {
-            predicates.add(criteriaBuilder.like(root.get("address"), "%" + address + "%"));
+        if (officerAddress != null && !officerAddress.isBlank() && !officerAddress.isEmpty()) {
+            predicates.add(criteriaBuilder.like(root.get("officerAddress"), "%" + officerAddress + "%"));
         }
     
-        if (memberAge != null && memberAge > 0) {
+        if (officerAge != null && officerAge > 0) {
             try {
-                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("memberAge"), memberAge));
+                predicates.add(criteriaBuilder.greaterThanOrEqualTo(root.get("officerAge"), officerAge));
             } catch (DateTimeParseException e) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid date format");
             }

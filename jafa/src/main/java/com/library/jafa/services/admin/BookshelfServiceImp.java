@@ -8,21 +8,16 @@ import com.library.jafa.dao.book.BookshelfDao;
 import com.library.jafa.dto.PageResponse;
 import com.library.jafa.dto.admin.BookshelfRequestDto;
 import com.library.jafa.entities.Bookshelf;
-import com.library.jafa.repositories.BookRepository;
 import com.library.jafa.repositories.BookshelfRepository;
-import com.library.jafa.repositories.RoleRepository;
 
 @Service
 public class BookshelfServiceImp implements BookshelfService {
 
-    @Autowired
-    RoleRepository rolesRepository;
+
 
     @Autowired
     BookshelfRepository bookshelfRepository;
 
-    @Autowired
-    BookRepository bookRepository;
 
     @Autowired
     BookshelfDao bookshelfDao;
@@ -82,7 +77,7 @@ public class BookshelfServiceImp implements BookshelfService {
     @Override
     public Bookshelf updateBookshelf(String id, BookshelfRequestDto dto) {
         validasi(dto);
-        Bookshelf bookshelf = bookshelfRepository.findByCategoryBook(dto.getCategoryBook());
+        Bookshelf bookshelf = bookshelfRepository.findById(id).get();
         bookshelf.setCategoryBook(dto.getCategoryBook());
         bookshelf.setDescriptionBookshelf(dto.getDescriptionBookshelf());
         bookshelf.setCapacity(dto.getCapacity());

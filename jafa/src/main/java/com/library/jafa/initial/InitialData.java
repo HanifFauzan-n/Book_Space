@@ -40,10 +40,10 @@ public class InitialData implements ApplicationRunner {
         }
         List<Admin> admins = adminRepository.findAll();
         if (admins.isEmpty()) {
-            Users user = new Users(null, "nurjamilahh98@gmail.com", "jafakelompok3","",
+            Users user = new Users(null, "haniffauzann55@gmail.com", "nurrahman11","",
             roleRepository.findByRoleName(RoleConstant.ADMIN_ROLE));
-            user.setPassword(passwordEncoder.encode("jafakelompok3"));
-            Admin admin = new Admin(null, "jafa", "bandung", "089515752383", "haniffauzann55@gmail.com", user);
+            user.setPassword(passwordEncoder.encode("nurrahman11"));
+            Admin admin = new Admin(null, "hanif", "Cilacap", "083103262885", "haniffauzann55@gmail.com", user);
 
             userRepository.save(user);
             adminRepository.save(admin);

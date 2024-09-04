@@ -14,7 +14,7 @@ public class RegistrationDto {
     private String name;
     private Integer age;
     private String gender;
-    private String Address;
+    private String address;
     private String photo;
     private String email;
     private String password;
