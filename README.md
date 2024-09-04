@@ -1,6 +1,6 @@
 # BookSpace
 
-**BookSpace** adalah aplikasi perpustakaan modern yang dirancang untuk memudahkan manajemen koleksi buku, rak buku, dan pengguna perpustakaan. Aplikasi ini menyediakan fitur-fitur lengkap untuk pencarian, penyimpanan, pengelolaan, serta pelaporan data buku dan rak buku secara efisien.
+**BookSpace** adalah aplikasi perpustakaan modern yang dirancang untuk memudahkan manajemen koleksi buku, rak buku, dan pengguna perpustakaan. Aplikasi ini menyediakan fitur-fitur lengkap untuk pencarian, penyimpanan, pengelolaan, serta detail data buku dan rak buku secara efisien.
 
 ## Fitur Utama
 
@@ -10,9 +10,14 @@
 
 - **Pencarian dan Penyortiran**: Temukan buku dengan cepat melalui fitur pencarian yang canggih. Buku dapat disortir berdasarkan judul, penulis, atau kategori rak.
 
-- **Integrasi Foto Buku**: Aplikasi mendukung penyimpanan foto sampul buku untuk referensi visual yang lebih baik.
+- **Keterangan dan Statistik**: Dapatkan meliihattkan detail tentang jumlah buku yang tersedia, kategori rak yang penuh, dan statistik lainnya.
 
-- **Pelaporan dan Statistik**: Dapatkan laporan mendetail tentang jumlah buku yang tersedia, kategori rak yang penuh, dan statistik lainnya.
+- ## Logo atau Gambar Aplikasi
+
+![BookSpace Logo](Reference/Screenshot 2024-09-04 171339.png)
+
+Gambar di atas merupakan logo atau tampilan dari aplikasi **BookSpace**.
+
 
 ## Teknologi yang Digunakan
 
