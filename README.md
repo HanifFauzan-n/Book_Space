@@ -1,0 +1,29 @@
+# BookSpace
+
+**BookSpace** adalah aplikasi perpustakaan modern yang dirancang untuk memudahkan manajemen koleksi buku, rak buku, dan pengguna perpustakaan. Aplikasi ini menyediakan fitur-fitur lengkap untuk pencarian, penyimpanan, pengelolaan, serta pelaporan data buku dan rak buku secara efisien.
+
+## Fitur Utama
+
+- **Manajemen Buku**: Tambah, ubah, dan hapus informasi buku dengan mudah. Setiap buku dilengkapi dengan informasi detail seperti judul, penulis, tanggal perekaman, deskripsi, dan status ketersediaan.
+  
+- **Manajemen Rak Buku**: Atur kategori rak buku dan kapasitasnya. Pantau jumlah buku yang terisi di setiap rak dan kelola deskripsi rak secara rinci.
+
+- **Pencarian dan Penyortiran**: Temukan buku dengan cepat melalui fitur pencarian yang canggih. Buku dapat disortir berdasarkan judul, penulis, atau kategori rak.
+
+- **Integrasi Foto Buku**: Aplikasi mendukung penyimpanan foto sampul buku untuk referensi visual yang lebih baik.
+
+- **Pelaporan dan Statistik**: Dapatkan laporan mendetail tentang jumlah buku yang tersedia, kategori rak yang penuh, dan statistik lainnya.
+
+## Teknologi yang Digunakan
+
+- **Backend**: Java dengan Spring Framework
+- **Database**: MySQL
+- **Frontend**: React.js dengan Tailwind CSS untuk antarmuka pengguna yang responsif dan modern
+- **ORM**: Hibernate untuk manajemen database
+
+## Cara Installasi
+
+1. **Clone repository ini:**
+   ```bash
+   git clone https://github.com/username/BookSpace.git
+   cd BookSpace
