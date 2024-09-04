@@ -67,10 +67,6 @@ const ViewOfficer = () => {
   };
 
   const fetchOfficer = async () => {
-    console.log(orderBy);
-    console.log(sortOrder);
-    console.log(page);
-    console.log(officer);
     setIsLoading(true);
     try {
       const result = await viewOfficer(page, 5, orderBy, sortOrder);
@@ -79,7 +75,7 @@ const ViewOfficer = () => {
       setOfficer(result);
       setIsLoading(false);
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrorMessage(error.message);
       setIsLoading(false);
     }
@@ -87,10 +83,10 @@ const ViewOfficer = () => {
   const handleDelete = async (id) => {
 		try {
       window.scrollTo(0,0);
-			const result = await removeOfficer(id)
+			const result = await removeOfficer(id);
       console.log(result);
 			if (result) {
-				setSuccessMessage(`Officer was Delete`)
+				setSuccessMessage(`Officer was Deleted`);
 			} else {
 				console.error(`Failed deleting officer : ${result.responseMessage}`)
 			}
