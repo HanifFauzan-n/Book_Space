@@ -12,11 +12,11 @@
 
 - **Keterangan dan Statistik**: Dapatkan meliihattkan detail tentang jumlah buku yang tersedia, kategori rak yang penuh, dan statistik lainnya.
 
-- ## Logo atau Gambar Aplikasi
+- ## Diagram ER atau Gambar relasi Aplikasi
 
-![BookSpace Logo](Reference/Screenshot 2024-09-04 171339.png)
+![BookSpace Logo](Reference/Screenshot%202024-09-04%20171339.png)
 
-Gambar di atas merupakan logo atau tampilan dari aplikasi **BookSpace**.
+Gambar di atas merupakan diagram atau hubungan relasi dari aplikasi **BookSpace**.
 
 
 ## Teknologi yang Digunakan
