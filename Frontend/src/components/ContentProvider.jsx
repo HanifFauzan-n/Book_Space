@@ -13,19 +13,43 @@ export const ContentProvider = ({ children }) => {
     {
       book: {
         name: "book",
-        link: ["/create-book", "/read-book", "/update-book", "/delete-book"],
+        bool: true,
+        link: ["/create-book", "/view-book", "/update-book", "/delete-book"],
       },
     },
     {
       member: {
         name: "member",
-        link: ["/create-member", "/read-member", "/update-member", "/delete-member"],
+        bool: true,
+        link: ["/create-member", "/view-member", "/update-member", "/delete-member"],
+      },
+    },
+    {
+      officer: {
+        name: "officer",
+        bool: true,
+        link: ["/create-officer", "/view-officer", "/update-officer", "/delete-officer"],
       },
     },
     {
       bookshelf: {
         name: "bookshelf",
-        link: ["/create-bookshelf", "/read-bookshelf", "/update-bookshelf", "/delete-bookshelf"],
+        bool: true,
+        link: ["/create-bookshelf", "/view-bookshelf", "/update-bookshelf", "/delete-bookshelf"],
+      },
+    },
+    {
+      borrowing: {
+        name: "borrowing",
+        bool: false,
+        name2: "return book",
+        link: ["/create-borrowing", "/create-return", "/view-borrowing", "/delete-borrowing"],
+      },
+    },
+    {
+      return: {
+        name: "return book",
+        link: ["/create-return", "/view-return", "/update-return", "/delete-return"],
       },
     },
   ];

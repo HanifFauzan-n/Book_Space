@@ -1,13 +1,14 @@
 import { registerMember } from "../utils/fetchAPI";
 import { useState } from "react";
 import Sidebar from "../components/Sidebar.jsx";
+import { useNavigate } from "react-router-dom";
 
 const AddMember = () => {
   const [registration, setRegistration] = useState({
     name: "",
     age: "",
     gender: "",
-    Addres: "",
+    address: "",
     photo: "",
     email: "",
     password: "",
@@ -15,34 +16,44 @@ const AddMember = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const navigate = useNavigate();
+	const redirectUrl = "/member"
+
   const handleInputChange = (e) => {
     setRegistration({ ...registration, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    window.scrollTo(0,0);
+
     try {
       const res = await registerMember(registration);
       console.log(res.json);
       if (res.success) {
-        setSuccessMessage("A new bookshelf was added successfully !");
+        setSuccessMessage("A new member was added successfully !");
         setRegistration({
           name: "",
           age: "",
           gender: "",
-          Addres: "",
+          address: "",
           photo: "",
           email: "",
           password: "",
         });
+        navigate(redirectUrl, { replace: true })
+        window.location.reload()
         setErrorMessage("");
       } else {
-        setErrorMessage("Error adding new bookshelf");
+        setErrorMessage("Error adding new member");
       }
     } catch (error) {
-
-      console.log(error.respone);
-      setErrorMessage(error);
+      console.log(error);
+      if(error === "ERR_BAD_REQUEST"){
+        setErrorMessage("Access Denied")
+      }
+      else
+      setErrorMessage(error)
     }
     setTimeout(() => {
       setSuccessMessage("");
@@ -69,7 +80,7 @@ const AddMember = () => {
             </div>
           )}
           <h2 className="text-2xl font-bold mb-6 mt-5 text-gray-800 text-center">
-            Create New User
+            Create New Member
           </h2>
 
           <form onSubmit={handleSubmit}>
@@ -139,40 +150,23 @@ const AddMember = () => {
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="Address"
+                htmlFor="address"
               >
                 Address
               </label>
               <input
                 type="text"
-                id="Address"
-                name="Address"
+                id="address"
+                name="address"
                 onChange={(e) => {
                   handleInputChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Address"
+                placeholder="Enter address"
               />
             </div>
 
-            {/* Photo Field */}
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="photo"
-              >
-                Photo
-              </label>
-              <input
-                type="file"
-                id="photo"
-                name="photo"
-                onChange={(e) => {
-                  handleInputChange(e);
-                }}
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
+          
 
             {/* Email Field */}
             <div className="mb-4">

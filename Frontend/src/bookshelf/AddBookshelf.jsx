@@ -12,7 +12,7 @@ export default function AddBookshelf() {
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleRoomInputChange = (e) => {
+  const handleChange = (e) => {
     const name = e.target.name;
     let value = e.target.value;
 
@@ -32,12 +32,17 @@ export default function AddBookshelf() {
           descriptionBookshelf: "",
         });
         setErrorMessage("");
-      } else {
-        setErrorMessage("Error adding new bookshelf");
+      }
+      if(res === "ERR_BAD_REQUEST"){
+        setErrorMessage("Access Denied")
       }
     } catch (error) {
         console.log(error);
-        setErrorMessage(error);
+        if(error === "ERR_BAD_REQUEST"){
+          setErrorMessage("Access Denied")
+        }
+        else
+        setErrorMessage(error)
       }
     setTimeout(() => {
       setSuccessMessage("");
@@ -69,7 +74,7 @@ export default function AddBookshelf() {
             className="w-full max-w-lg bg-white p-8 shadow-lg rounded-lg"
           >
             <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-              Create New Entry
+              Create New Bookshelf
             </h2>
 
             {/* Category Field */}
@@ -86,7 +91,7 @@ export default function AddBookshelf() {
                 name="categoryBook"
                 value={newBookshelf.categoryBook}
                 onChange={(e) => {
-                  handleRoomInputChange(e);
+                  handleChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Category"
@@ -107,7 +112,7 @@ export default function AddBookshelf() {
                 name="capacity"
                 value={newBookshelf.capacity}
                 onChange={(e) => {
-                  handleRoomInputChange(e);
+                  handleChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Capacity"
@@ -128,7 +133,7 @@ export default function AddBookshelf() {
                 rows="4"
                 value={newBookshelf.descriptionBookshelf}
                 onChange={(e) => {
-                  handleRoomInputChange(e);
+                  handleChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                 placeholder="Enter Description Bookshelf"

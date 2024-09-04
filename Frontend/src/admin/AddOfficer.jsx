@@ -1,48 +1,60 @@
 import { useState } from "react";
-import { addBook } from "../utils/fetchAPI.js";
 import Sidebar from "../components/Sidebar.jsx";
+import { registerOfficer } from "../utils/fetchAPI.js";
+import { useNavigate } from "react-router-dom";
 
-const AddBook = () => {
-  const [newBook, setNewBook] = useState({
-    author: "",
-    descriptionBook: "",
-    categoryBook: "",
-    fill: 0,
+const AddOfficer = () => {
+  const [registration, setRegistration] = useState({
+    name: "",
+    age: "",
+    gender: "",
+    address: "",
+    photo: "",
+    email: "",
+    password: "",
   });
-
-  const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleAdd = (e) => {
-    const name = e.target.name;
-    let value = e.target.value;
-
-    setNewBook({ ...newBook, [name]: value });
+  const handleInputChange = (e) => {
+    setRegistration({ ...registration, [e.target.name]: e.target.value });
   };
+
+  const navigate = useNavigate();
+  const redirectUrl = "/officer"
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     window.scrollTo(0,0);
+
     try {
-      const res = await addBook(newBook);
+      const res = await registerOfficer(registration);
       console.log(res);
+      setSuccessMessage("A new officer was added successfully !");
       if (res.success) {
-        setSuccessMessage("A new Book was added successfully !");
-        setNewBook({
-          author: "",
-          descriptionBook: "",
-          categoryBook: "",
-          fill: 0,
+        setRegistration({
+          name: "",
+          age: "",
+          gender: "",
+          address: "",
+          photo: "",
+          email: "",
+          password: "",
         });
+        navigate(redirectUrl, { replace: true })
+        // window.location.reload()
         setErrorMessage("");
+      } else {
+        setErrorMessage("Error adding new officer");
       }
     } catch (error) {
       console.log(error);
-        if(error === "ERR_BAD_REQUEST"){
-          setErrorMessage("Access Denied")
-        }
-        else
-        setErrorMessage(error)
+      if(error === "ERR_BAD_REQUEST"){
+        setErrorMessage("Access Denied")
+      }
+      else
+      setErrorMessage(error)
     }
     setTimeout(() => {
       setSuccessMessage("");
@@ -53,7 +65,7 @@ const AddBook = () => {
   return (
     <>
       <Sidebar />
-      <div className=" p-8 min-h-screen bg-gradient-to-r ml-44 from-green-400 via-blue-500 to-purple-600 text-white flex justify-center items-center">
+      <div className="p-8 min-h-screen bg-gradient-to-r ml-44 from-green-400 via-blue-500 to-purple-600 text-white flex justify-center items-center">
         <div className="w-full max-w-lg bg-white p-8 shadow-lg rounded-lg relative">
           {/* Pop-up Success Message */}
           {successMessage && (
@@ -68,111 +80,129 @@ const AddBook = () => {
               {errorMessage}
             </div>
           )}
-          <form
-            onSubmit={handleSubmit}
-            className="w-full max-w-lg bg-white p-8 shadow-lg rounded-lg"
-          >
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 text-center">
-              Create New Book
-            </h2>
+          <h2 className="text-2xl font-bold mb-6 mt-5 text-gray-800 text-center">
+            Create New Officer
+          </h2>
 
-            {/* Book Title Field */}
+          <form onSubmit={handleSubmit}>
+            {/* Name Field */}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="bookTitle"
+                htmlFor="name"
               >
-                Book Title
+                Name
               </label>
               <input
                 type="text"
-                id="bookTitle"
-                name="bookTitle"
+                id="name"
+                name="name"
                 onChange={(e) => {
-                  handleAdd(e);
+                  handleInputChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Book Title"
+                placeholder="Enter Name"
               />
             </div>
 
-            {/* Author Field */}
+            {/* Age Field */}
             <div className="mb-4">
               <label
                 className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="author"
+                htmlFor="age"
               >
-                Author
-              </label>
-              <input
-                type="text"
-                id="author"
-                name="author"
-                onChange={(e) => {
-                  handleAdd(e);
-                }}
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Author Name"
-              />
-            </div>
-
-            {/* Description Book Field */}
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="descriptionBook"
-              >
-                Description
-              </label>
-              <textarea
-                id="descriptionBook"
-                name="descriptionBook"
-                rows="4"
-                onChange={(e) => {
-                  handleAdd(e);
-                }}
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Description"
-              ></textarea>
-            </div>
-
-            {/* Category Book Field */}
-            <div className="mb-4">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="categoryBook"
-              >
-                Category
-              </label>
-              <input
-                type="text"
-                id="categoryBook"
-                name="categoryBook"
-                onChange={(e) => {
-                  handleAdd(e);
-                }}
-                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Category"
-              />
-            </div>
-
-            {/* Fill Field */}
-            <div className="mb-6">
-              <label
-                className="block text-gray-700 text-sm font-bold mb-2"
-                htmlFor="fill"
-              >
-                Fill
+                Age
               </label>
               <input
                 type="number"
-                id="fill"
-                name="fill"
+                id="age"
+                name="age"
                 onChange={(e) => {
-                  handleAdd(e);
+                  handleInputChange(e);
                 }}
                 className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter Fill Information"
+                placeholder="Enter Age"
+              />
+            </div>
+
+            {/* Gender Field */}
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="gender"
+              >
+                Gender
+              </label>
+              <select
+                id="gender"
+                name="gender"
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+              </select>
+            </div>
+
+            {/* Address Field */}
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="address"
+              >
+                address
+              </label>
+              <input
+                type="text"
+                id="address"
+                name="address"
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter address"
+              />
+            </div>
+            {/* Email Field */}
+            <div className="mb-4">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="email"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter Email"
+              />
+            </div>
+
+            {/* Password Field */}
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 text-sm font-bold mb-2"
+                htmlFor="password"
+              >
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                onChange={(e) => {
+                  handleInputChange(e);
+                }}
+                className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                placeholder="Enter Password"
               />
             </div>
 
@@ -192,4 +222,4 @@ const AddBook = () => {
   );
 };
 
-export default AddBook;
+export default AddOfficer;
