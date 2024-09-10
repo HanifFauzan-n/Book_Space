@@ -56,15 +56,13 @@ const Profile = () => {
           <p className="text-xl text-gray-700">Hanif Fauzan Nurrahman</p>
           <div className="mt-4 flex space-x-3">
             <a
-              href="https://www.instagram.com/haniffauzan18/"
-              target="_blank"
+
               className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-6 rounded-full shadow-md"
             >
               Follow
             </a>
             <a
-              href="https://wa.me/6283103262885"
-              target="_blank"
+
               className="bg-pink-500 hover:bg-pink-600 text-white font-semibold py-2 px-6 rounded-full shadow-md"
             >
               Message
