@@ -16,7 +16,7 @@
 
 ![BookSpace Logo](Reference/Screenshot%202024-09-04%20171339.png)
 
-Gambar di atas merupakan diagram atau hubungan relasi dari aplikasi **BookSpace**.
+Gambar di atas merupakan diagram atau hubungan relasi dari aplikasi perpustakaan **BookSpace**.
 
 
 ## Teknologi yang Digunakan
